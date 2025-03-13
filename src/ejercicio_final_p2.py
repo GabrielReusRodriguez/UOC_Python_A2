@@ -56,41 +56,44 @@ def decrypt(inputValue : str , keys : dict, token: str):
 	"""
 	Encripta el string inputValue segun el diccionario keys y rodenadolo del char token
 		>>> decrypt ("hol*1*", {'a':1},'*')
-		"hola"
-		>>> decrypt ("M+0+s +3+m+0+gos son G+8+NI+4+L+8+S.", {'i':0,'E':8,'a':3,'A':4},,'+')
-		"Mis amigos son GENIALES."
+		'hola'
+		>>> decrypt ("M+0+s +3+m+0+gos son G+8+NI+4+L+8+S.", {'i':0,'E':8,'a':3,'A':4},'+')
+		'Mis amigos son GENIALES.'
 		>>> decrypt ("hol#1# 11", {'a':1}, '#')
-		"hola 11"
+		'hola 11'
 		>>> decrypt ("16", {'A':1},'%')
-		"16"
+		'16'
 		>>> decrypt ("/7/ola mi c/5/lular /5/s 09999999", {'e':5,'H':7}, '/')
-		"Hola mi celular es 09999999"
-		>>> decrypt ("*120**100*ci*20*n q*30**17* *100**17*rmit*17* g*17*n*17*rar*30*na s*20*licit*30*d", {'O':120,'o':20,'e':17,'p':100,'u':30}, '*')
-		"Opcion que permite generar una solicitud"
+		'Hola mi celular es 09999999'
+		>>> decrypt ("*120**100*ci*20*n q*30**17* *100**17*rmit*17* g*17*n*17*rar *30*na s*20*licit*30*d", {'O':120,'o':20,'e':17,'p':100,'u':30}, '*')
+		'Opcion que permite generar una solicitud'
 		>>> decrypt ("Hola mi celular es 09999999", {'9':7,'H':8}, '=')
-		"No es posible desencriptar la cadena. Verifique los parámetros de entrada"
+		'No es posible desencriptar la cadena. Verifique los parámetros de entrada'
 		>>> decrypt ("Hola mi celular es 09999999", {'e':7,'H':8}, '¿')
-		"No es posible desencriptar la cadena. Verifique los parámetros de entrada"
+		'No es posible desencriptar la cadena. Verifique los parámetros de entrada'
 	"""
 
 	ERROR_MSG = "No es posible desencriptar la cadena. Verifique los parámetros de entrada"
-	if checkDictionary(keys) == False or checkToken(token) == False or checkInput(inputValue, token) == False:
+	if checkDictionary(keys) == False or checkToken(token) == False:
 		return ERROR_MSG
-	decryptedValue =""
-	for character in inputValue:
-		if character in keys:
-			decryptedValue += token + str(keys[character]) + token
-		else:
-			decryptedValue += character
+	decryptedValue = inputValue
+	for character in keys:
+		decryptedValue = decryptedValue.replace(token + str(keys[character]) + token, character)
 	return decryptedValue
 
 def checkDictionary(keys:dict)->bool:
 	NUMERIC_CHARS ="0123456789"
+	values = {}
 	for keyValue in keys:
 		if type(keyValue) != str:
 			return False
-		if	keyValue in NUMERIC_CHARS:
+		#NO pueden haber valores repetidos.
+		if keyValue in NUMERIC_CHARS:
 			return False
+		if keyValue in values:
+			return False
+		else:
+			values[keyValue] = keyValue
 	return True
 
 def checkToken(token: str)->bool:
@@ -103,11 +106,13 @@ def checkToken(token: str)->bool:
 		return False
 	return True
 
-def checkInput(inputValue:str, token:str)->bool:
-	#Check que el token NO esté ya incluido en la inputValue.
-	if token in inputValue:
-		return False
-	return True
+#def checkInput(inputValue:str, token:str)->bool:
+#	#Check que el token NO esté ya incluido en la inputValue.
+#	if token in inputValue:
+#		return False
+#	return True
+
+
 
 
 # A partir de aqui, solo lo ejecutamos si llamamos el script como programa (main).
@@ -115,4 +120,5 @@ def checkInput(inputValue:str, token:str)->bool:
 if __name__ == "__main__":
 	#Ejecutamos los tests para evitar que en la entrega se ejecute (harán un import del fichero).
 	import doctest
+#	print(decrypt ("hol*1*", {'a':1},'*'))
 	doctest.testmod()

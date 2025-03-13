@@ -98,15 +98,15 @@ def encrypt(inputValue : str , keys : dict, token: str):
 	ERROR_MSG = "No es posible encriptar la cadena. Verifique los parámetros de entrada"
 	if checkDictionary(keys) == False or checkToken(token) == False or checkInput(inputValue, token) == False:
 		return ERROR_MSG
-#	encryptedValue = inputValue
-#	for character in keys:
-#		encryptedValue = encryptedValue.replace(character, token + str(keys[character]) + token)
-	encryptedValue =""
-	for character in inputValue:
-		if character in keys:
-			encryptedValue += token + str(keys[character]) + token
-		else:
-			encryptedValue += character
+	encryptedValue = inputValue
+	for character in keys:
+		encryptedValue = encryptedValue.replace(character, token + str(keys[character]) + token)
+#	encryptedValue =""
+#	for character in inputValue:
+#		if character in keys:
+#			encryptedValue += token + str(keys[character]) + token
+#		else:
+#			encryptedValue += character
 	return encryptedValue
 
 def checkDictionary(keys:dict)->bool:
