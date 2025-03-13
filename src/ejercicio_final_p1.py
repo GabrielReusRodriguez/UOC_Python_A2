@@ -1,6 +1,8 @@
-#/usr/bin/env python3
+#!/usr/bin/env python3
 
 """ 
+	Autor: Gabriel Reus Rodriguez greus@uoc.edu
+
 	Ejercicio FINAL pregunta 1 del modulo A2 del curso de programacion de python.
 	
 	En este ejercicio, deberás implementar una función llamada encrypt(inputValue, keys, token)
