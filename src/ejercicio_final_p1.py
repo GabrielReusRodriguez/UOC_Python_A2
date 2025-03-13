@@ -113,13 +113,13 @@ def checkDictionary(keys:dict)->bool:
 	for keyValue in keys:
 		if type(keyValue) != str:
 			return False
-		if	keyValue in NUMERIC_CHARS:
+		#NO pueden haber valores repetidos.
+		if keyValue in NUMERIC_CHARS:
 			return False
-		if values[keyValue] != None:
+		if keyValue in values:
 			return False
 		else:
 			values[keyValue] = keyValue
-		#NO pueden haber valores repetidos.
 	return True
 
 def checkToken(token: str)->bool:
@@ -145,4 +145,4 @@ if __name__ == "__main__":
 	#Ejecutamos los tests para evitar que en la entrega se ejecute (harán un import del fichero).
 	import doctest
 	doctest.testmod()
-	#print(encrypt ("hola 11", {'a':1}, '#'))
+#	print(encrypt ("hola 11", {'a':1}, '#'))
